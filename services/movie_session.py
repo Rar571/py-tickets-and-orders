@@ -1,4 +1,4 @@
-from xmlrpc.client import DateTime
+from datetime import datetime
 
 from django.db.models import QuerySet
 
@@ -15,7 +15,8 @@ def create_movie_session(
     )
 
 
-def get_movie_sessions(session_date: DateTime = None) -> QuerySet:
+def get_movie_sessions(session_date:
+                       datetime = None) -> QuerySet[MovieSession]:
     queryset = MovieSession.objects.all()
     if session_date:
         queryset = queryset.filter(show_time__date=session_date)
@@ -28,11 +29,11 @@ def get_movie_session_by_id(movie_session_id: int) -> MovieSession:
 
 def update_movie_session(
     session_id: int,
-    show_time: str = None,
+    show_time: datetime = None,
     movie_id: int = None,
     cinema_hall_id: int = None,
 ) -> None:
-    movie_session = MovieSession.objects.get(id=session_id)
+    movie_session = get_movie_session_by_id(session_id)
     if show_time is not None:
         movie_session.show_time = show_time
     if movie_id is not None:

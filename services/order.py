@@ -22,7 +22,8 @@ def create_order(tickets: list[dict],
         date1 = datetime.strptime(date, "%Y-%m-%d %H:%M")
         date1 = date1.replace(second=0, microsecond=0)
         order = Order.objects.create(user=user, created_at=date1)
-    order = Order.objects.create(user=user)
+    else:
+        order = Order.objects.create(user=user)
     for ticket in tickets:
         Ticket.objects.create(order=order,
                               movie_session_id=ticket["movie_session"],
